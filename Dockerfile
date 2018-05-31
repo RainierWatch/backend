@@ -1,5 +1,5 @@
 FROM node:6
-MAINTAINER James Kolce <contact@jameskolce.com>
+MAINTAINER Kerry Nordstrom
 
 RUN mkdir -p /usr/api
 COPY . /usr/api

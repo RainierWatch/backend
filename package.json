@@ -8,7 +8,7 @@
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
     "dboff": "killall mongod",
     "watch": "nodemon",
-    "start": "nodemon index.js --exec babel-node --presets env",
+    "start": "node server.js",
     "build": "babel lib -d dist",
     "serve": "node dist/index.js"
   },
@@ -23,19 +23,10 @@
   },
   "homepage": "https://github.com/RainierWatch/backend#readme",
   "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "bcrypt": "^2.0.1",
-    "body-parser": "^1.18.2",
-    "cors": "^2.8.4",
-    "crypto": "^1.0.1",
-    "dotenv": "^5.0.1",
-    "express": "^4.16.3",
-    "http-errors": "^1.6.3",
-    "jsonwebtoken": "^8.2.1",
-    "mongoose": "^5.0.16",
-    "nodemon": "^1.17.3",
-    "winston": "^2.4.2"
+    "boom": "^3.1.2",
+    "dotenv": "^2.0.0",
+    "hapi": "^13.3.0",
+    "joi": "^8.0.5",
+    "mongojs": "^2.3.0"
   }
 }
