@@ -1,29 +1,25 @@
+'use strict';
+
 const Hapi = require('hapi');
-const mongojs = require('mongojs');
+const mongoose = require('mongoose');
+const MongoDBUrl = 'mongodb://localhost:27017/hapijs';
+const routes = require('./routes');
 
-// Loads environment variables
-// Used only in development
-require('dotenv').config({ silent: true });
-
-const server = new Hapi.Server();
-server.connection({ port: process.env.PORT || 3000 });
-
-// Connect with the database
-server.app.db = mongojs(process.env.MONGO_HOST + '/api');
-
-// Add the routes
-server.register(require('./routes'), (err) => {
-
-  if (err) {
-    console.error('Failed to load plugin:', err);
-  }
-
-  // Start the server
-  server.start((err) => {
-    if (err) {
-      throw err;
-    }
-
-    console.log('Server running at:', server.info.uri);
-  });
+const server = new Hapi.Server({
+  port: 3000,
+  host: 'localhost'
 });
+
+server.route(routes);
+
+(async () => {
+  try {
+    await server.start();
+    // Once started, connect to Mongo through Mongoose
+    mongoose.connect(MongoDBUrl, {}).then(() => { console.log(`Connected to Mongo server`) }, err => { console.log(err) });
+    console.log(`Server running at: ${server.info.uri}`);
+  }
+  catch (err) {
+    console.log(err)
+  }
+})();

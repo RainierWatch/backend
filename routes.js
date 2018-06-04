@@ -1,53 +1,29 @@
-const Joi = require('joi');
-const Boom = require('boom');
+const UserController = require('./src/controllers/user');
 
-exports.register = (server, options, next) => {
-  const messages = server.app.db.collection('messages');
-
-  // Get all the messages
-  server.route({
+module.exports = [
+  {
     method: 'GET',
-    path: '/',
-    handler: (request, reply) => {
-
-      messages.find((err, docs) => {
-
-        if (err) {
-          return reply(Boom.badData('Oops! There was an error with MongoDB', err));
-        }
-
-        reply(docs);
-      });
-    }
-  });
-
-  // Add a new message
-  server.route({
+    path: '/dogs',
+    handler: UserController.list
+  },
+  {
+    method: 'GET',
+    path: '/dogs/{id}',
+    handler: UserController.get
+  },
+  {
     method: 'POST',
-    path: '/',
-    handler: (request, reply) => {
-
-      messages.save(request.payload, (err, result) => {
-
-        if (err) {
-          return reply(Boom.badData('Oops! There was an error with MongoDB', err));
-        }
-
-        reply(result);
-      });
-    },
-    config: {
-      validate: {
-        payload: {
-          message: Joi.string().required()
-        }
-      }
-    }
-  });
-
-  next();
-}
-
-exports.register.attributes = {
-  name: 'routes'
-};
+    path: '/dogs',
+    handler: UserController.create
+  },
+  {
+    method: 'PUT',
+    path: '/dogs/{id}',
+    handler: UserController.update
+  },
+  {
+    method: 'DELETE',
+    path: '/dogs/{id}',
+    handler: UserController.remove
+  }
+]
